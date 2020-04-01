@@ -20,7 +20,7 @@ depends=(
 makedepends=(
     "linux-bede-headers>=$_current_linux_version"
     "linux-bede-headers<$_next_linux_version"
-    "bbswitch-dkms=$pkgver"
+    "bbswitch-dkms>=$pkgver"
 )
 source=()
 sha512sums=()
