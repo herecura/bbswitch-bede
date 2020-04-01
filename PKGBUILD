@@ -1,13 +1,14 @@
+# vim:set ft=sh et:
 # Maintainer: Sven-Hendrik Haase <sh@lutzhaase.com>
 # Contributor: M0Rf30
 # Contributor: Samsagax <samsagax@gmail.com>
 
-pkgname=bbswitch-bede
-_basename=bbswitch
+_pkgname=bbswitch
+pkgname=$_pkgname-bede
 pkgver=0.8
 _current_linux_version=5.6.1
 _next_linux_version=5.7
-pkgrel=277
+pkgrel=278
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('x86_64')
 url="http://github.com/Bumblebee-Project/bbswitch"
@@ -19,20 +20,15 @@ depends=(
 makedepends=(
     "linux-bede-headers>=$_current_linux_version"
     "linux-bede-headers<$_next_linux_version"
+    "bbswitch-dkms=$pkgver"
 )
-source=("${_basename}-$pkgver.tar.gz::https://github.com/Bumblebee-Project/bbswitch/archive/v${pkgver}.tar.gz")
-sha512sums=('11ab163931feb6c0e202d04c4552b848e999fedea9990390c26b28abdb4a69081ccfb5a22d1e390cc274f1c0cfc9adedc719c5fece14738b17aaa93e28865b7c')
-
-build() {
-  cd ${srcdir}/${_basename}-${pkgver}
-
-  make KDIR=/usr/src/linux-bede
-}
+source=()
+sha512sums=()
 
 package() {
-  cd ${srcdir}/${_basename}-${pkgver}
-   
-  local extradir="/usr/lib/modules/$(</usr/src/linux-bede/version)/extramodules"
-  install -Dm644 bbswitch.ko "${pkgdir}${extradir}/$pkgname/bbswitch.ko"
-  find "${pkgdir}" -name '*.ko' -exec xz {} +
+    local kernver=$(</usr/src/linux-bede/version)
+    local extradir="/usr/lib/modules/$kernver/extramodules"
+    install -dm755 "${pkgdir}${extradir}/$_pkgname"
+    cp -a "/var/lib/dkms/$_pkgname/kernel-$kernver-x86_64/module"/* \
+        "${pkgdir}${extradir}/$_pkgname/"
 }
