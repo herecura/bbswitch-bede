@@ -6,9 +6,9 @@
 _pkgname=bbswitch
 pkgname=$_pkgname-bede
 pkgver=0.8
-_current_linux_version=5.6.1
+_current_linux_version=5.6.2
 _next_linux_version=5.7
-pkgrel=278
+pkgrel=280
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('x86_64')
 url="http://github.com/Bumblebee-Project/bbswitch"
@@ -23,7 +23,7 @@ makedepends=(
     "bbswitch-dkms>=$pkgver"
 )
 source=()
-sha512sums=()
+
 
 package() {
     local kernver=$(</usr/src/linux-bede/version)
