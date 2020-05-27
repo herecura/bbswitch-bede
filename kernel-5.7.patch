@@ -1,0 +1,18 @@
+--- a/bbswitch.c	2020-05-27 15:26:44.308471358 +0200
++++ b/bbswitch.c	2020-05-27 15:28:14.809223773 +0200
+@@ -31,11 +31,14 @@
+ #include <linux/pci.h>
+ #include <linux/acpi.h>
+ #include <linux/module.h>
+-#include <asm/uaccess.h>
++#include <linux/uaccess.h>
+ #include <linux/suspend.h>
+ #include <linux/seq_file.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/version.h>
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0)
++#include <linux/proc_fs.h>
++#endif
+ 
+ #define BBSWITCH_VERSION "0.8"
+ 
